@@ -6,7 +6,17 @@
 </head>
 <body>
 
-    <h1>Its a <%= today %></h1>
+    <h1><%= today %></h1>
+
+    <ul>
+       <% for(var i =0; i<newItems.length; i++){ %>
+            <li><%=  newItems[i]  %></li> 
+      <%  }  %>
+    </ul>
+    <form action="/" method="post">
+        <input type="text" name="newItem">
+        <button type="submit">Add</button>
+    </form>
     
 </body>
 </html>
