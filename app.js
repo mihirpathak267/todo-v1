@@ -4,8 +4,13 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
+app.set("view engine", "ejs");
+
+var currentDay = new Date();
+var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 app.get("/", function(req, res){
-    res.send("Hello");
+    var today = days[currentDay.getDay()]; 
+    res.render("index", {today: today});
 });
 
 
