@@ -9,22 +9,24 @@ app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-var items = ["buy food", "cook food", "eat food"];
-var currentDay = new Date();
-var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+app.use(express.static("public"));
+
+let items = ["buy food", "cook food", "eat food"];
+let currentDay = new Date();
+let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 app.get("/", function(req, res){
-    var options = {
+    let options = {
         weekday: "long",
         day: "numeric",
         month: "long"
     }
     // var today = days[currentDay.getDay()]; 
-    var day = currentDay.toLocaleDateString("en-US", options);
+    let day = currentDay.toLocaleDateString("en-US", options);
     res.render("index", {today: day, newItems:items});
 });
 
 app.post("/", function(req, res){
-    var item = req.body.newItem;
+    let item = req.body.newItem;
     items.push(item);
 
     res.redirect("/");
