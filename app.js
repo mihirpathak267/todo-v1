@@ -1,6 +1,7 @@
 const express = require("express");
 
 const bodyParser = require("body-parser");
+const  date = require(__dirname+"/date.js");
 const { urlencoded } = require("body-parser");
 
 const app = express();
@@ -13,16 +14,10 @@ app.use(express.static("public"));
 
 let items = ["buy food", "cook food", "eat food"];
 let workItems = [];
-let currentDay = new Date();
-let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+
 app.get("/", function(req, res){
-    let options = {
-        weekday: "long",
-        day: "numeric",
-        month: "long"
-    }
-    // var today = days[currentDay.getDay()]; 
-    let day = currentDay.toLocaleDateString("en-US", options);
+    let day = date.getDay();
     res.render("index", {listTitle: day, newItems:items});
 });
 // work route
