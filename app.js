@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 let items = ["buy food", "cook food", "eat food"];
+let workItems = [];
 let currentDay = new Date();
 let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 app.get("/", function(req, res){
@@ -22,15 +23,42 @@ app.get("/", function(req, res){
     }
     // var today = days[currentDay.getDay()]; 
     let day = currentDay.toLocaleDateString("en-US", options);
-    res.render("index", {today: day, newItems:items});
+    res.render("index", {listTitle: day, newItems:items});
+});
+// work route
+app.get("/work", function(req, res){
+    res.render("index", {listTitle: "Work List", newItems: workItems})
 });
 
-app.post("/", function(req, res){
+app.post("/work", function(req, res){
     let item = req.body.newItem;
+    workItems.push(item);
+    res.redirect("/work");
+
+})
+
+
+
+app.post("/", function(req, res){
+    console.log(req.body);
+    let item = req.body.newItem;
+    if(req.body.list == "Work"){
+        workItems.push(item)
+        res.redirect("/work")
+    }else{
+        items.push(item)
+        res.redirect("/");
+    }
+
+    
     items.push(item);
 
     res.redirect("/");
 });
+
+app.get("/about", function(req, res){
+    res.render("about");
+})
 
 
 app.listen(4040, function(req, res){
